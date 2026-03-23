@@ -5,9 +5,23 @@ import { useState, FormEvent } from "react";
 const ContactSection = () => {
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const form = e.currentTarget;
+
+    const data = new FormData(form);
+
+    await fetch("https://formspree.io/f/mdaweajz", {
+      method: "POST",
+      body: data,
+      headers: {
+        Accept: "application/json",
+      },
+    });
+
     setSubmitted(true);
+    form.reset();
   };
 
   return (
@@ -26,13 +40,13 @@ const ContactSection = () => {
             Hablemos de tu proyecto
           </h2>
           <p className="text-muted-foreground text-lg">
-            Cuéntanos qué necesitas y te enviaremos un presupuesto personalizado
-            sin compromiso.
+            Cuéntanos qué necesitas y te enviaremos un presupuesto personalizado sin compromiso.
           </p>
         </motion.div>
 
         <div className="grid lg:grid-cols-5 gap-12 max-w-5xl mx-auto">
-          {/* Contact info */}
+          
+          {/* CONTACT INFO */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -45,22 +59,30 @@ const ContactSection = () => {
               </div>
               <div>
                 <p className="font-semibold text-foreground text-sm">WhatsApp</p>
-                <a href="https://wa.me/34607019436" className="text-muted-foreground text-sm hover:text-accent transition-colors">
+                <a
+                  href="https://wa.me/34607019436"
+                  className="text-muted-foreground text-sm hover:text-accent transition-colors"
+                >
                   +34 607 01 94 36
                 </a>
               </div>
             </div>
+
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0">
                 <Mail size={18} className="text-accent" />
               </div>
               <div>
                 <p className="font-semibold text-foreground text-sm">Email</p>
-                <a href="mailto:axionweb.es@gmail.com" className="text-muted-foreground text-sm hover:text-accent transition-colors">
+                <a
+                  href="mailto:axionweb.es@gmail.com"
+                  className="text-muted-foreground text-sm hover:text-accent transition-colors"
+                >
                   axionweb.es@gmail.com
                 </a>
               </div>
             </div>
+
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0">
                 <MapPin size={18} className="text-accent" />
@@ -72,7 +94,7 @@ const ContactSection = () => {
             </div>
           </motion.div>
 
-          {/* Form */}
+          {/* FORM */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -102,30 +124,35 @@ const ContactSection = () => {
                       Nombre
                     </label>
                     <input
+                      name="name"
                       required
                       type="text"
-                      className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                      className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm"
                       placeholder="Tu nombre"
                     />
                   </div>
+
                   <div>
                     <label className="text-sm font-medium text-foreground mb-1.5 block">
                       Email
                     </label>
                     <input
+                      name="email"
                       required
                       type="email"
-                      className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                      className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm"
                       placeholder="tu@email.com"
                     />
                   </div>
                 </div>
+
                 <div>
                   <label className="text-sm font-medium text-foreground mb-1.5 block">
                     Servicio de interés
                   </label>
                   <select
-                    className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                    name="service"
+                    className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm"
                     defaultValue=""
                   >
                     <option value="" disabled>Selecciona un servicio</option>
@@ -137,17 +164,20 @@ const ContactSection = () => {
                     <option>Otro</option>
                   </select>
                 </div>
+
                 <div>
                   <label className="text-sm font-medium text-foreground mb-1.5 block">
                     Mensaje
                   </label>
                   <textarea
+                    name="message"
                     required
                     rows={4}
-                    className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none"
+                    className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm resize-none"
                     placeholder="Cuéntanos sobre tu proyecto..."
                   />
                 </div>
+
                 <button
                   type="submit"
                   className="w-full rounded-lg bg-accent py-3.5 text-sm font-semibold text-accent-foreground transition-all hover:opacity-90"
