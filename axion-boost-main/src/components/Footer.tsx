@@ -26,7 +26,7 @@ const Footer = () => (
           )}
         </nav>
         <p className="text-primary-foreground/40 text-xs">
-          © {new Date().getFullYear()} Axion Web Development
+          © {new Date().getFullYear()} Axion Web Development · CEO Tareq Elgharsa
         </p>
       </div>
     </div>
